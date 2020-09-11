@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT --spring.datasource.url=jdbc:sqlserver://189.56.92.65;databaseName=dbjucespRP -jar target/*.jar 
+web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/*.jar 
