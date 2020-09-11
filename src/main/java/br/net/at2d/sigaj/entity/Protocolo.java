@@ -111,7 +111,7 @@ public class Protocolo implements Serializable {
   private String vre2;
 
   // bi-directional many-to-one association to Processo
-
+  @JsonIgnore
   @ManyToOne()
   @JoinColumn(name = "CODPROC", referencedColumnName = "CODIGO")
   private Processo processo;
