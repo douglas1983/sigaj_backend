@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/*.jar
+web: java $JAVA_OPTS -Dserver.port=$PORT --spring.datasource.url=$URLDATABASE -jar target/*.jar 
