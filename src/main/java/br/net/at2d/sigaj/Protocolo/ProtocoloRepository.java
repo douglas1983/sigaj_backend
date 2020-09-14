@@ -19,9 +19,9 @@ import br.net.at2d.sigaj.entity.QProtocolo;
 
 @Repository
 public interface ProtocoloRepository extends JpaRepository<Protocolo, Integer>, QuerydslPredicateExecutor<Protocolo>,
-    QuerydslBinderCustomizer<QProtocolo> {
+    QuerydslBinderCustomizer<QProtocolo>, ProtocoloRepositoryCustom {
   @Query(value = "Select p From Protocolo p where p.numero = :numero")
-  public List<Protocolo> findByNumero(@Param("numero") String numero);
+  public List<Protocolo> findByNumeroAndFetchRolesEagerly(@Param("numero") String numero);
 
   @SuppressWarnings("NullableProblems")
   @Override

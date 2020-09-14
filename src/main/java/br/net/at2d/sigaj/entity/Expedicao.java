@@ -69,7 +69,7 @@ public class Expedicao implements Serializable {
   private String retrg;
 
   // bi-directional many-to-one association to Func
-  @ManyToOne()
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "FUNC")
   private Func funcBean;
 

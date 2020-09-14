@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.Lob;
@@ -52,7 +53,7 @@ public class Exprot implements Serializable {
 	// private Restipo restipo;
 
 	// bi-directional many-to-one association to Protocolo
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
 	@JoinColumns({
 			@JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable = false, insertable = false, updatable = false),

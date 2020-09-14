@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.net.at2d.sigaj.entity.Protocolo;
-
 import io.swagger.v3.oas.annotations.Parameter;
 
 @RestController

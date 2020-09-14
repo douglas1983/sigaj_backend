@@ -30,14 +30,14 @@ public class Protex implements Serializable {
 	private ProtexPK id;
 
 	@JsonIgnore
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumns({
 			@JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable = false, insertable = false, updatable = false),
 			@JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable = false, insertable = false, updatable = false) })
 	private Protocolo protocoloEx;
 
 	// bi-directional many-to-one association to Expedicao
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CODEX")
 	private Expedicao expedicao;
 

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.net.at2d.sigaj.entity.Protocolo;
+
 import br.net.at2d.sigaj.mappers.ProtocoloMapper;
 import br.net.at2d.sigaj.repository.RegistroRepository;
 
@@ -29,7 +30,7 @@ public class ProtocoloService {
   }
 
   public Set<ProtocoloDTO> findByNumero(String numero) {
-    Set<ProtocoloDTO> protocolos = mapper.map(repository.findByNumero(numero));
+    Set<ProtocoloDTO> protocolos = mapper.map(repository.findByNumeroAndFetchRolesEagerly(numero));
     return protocolos;
   }
 

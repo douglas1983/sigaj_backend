@@ -34,13 +34,13 @@ public class Serdes implements Serializable {
 	private Double desn;
 
 	// bi-directional many-to-one association to Desconto
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
 	@JoinColumn(name = "CODDES", nullable = false, insertable = false, updatable = false)
 	private Desconto desconto;
 
 	// bi-directional many-to-one association to Desconto
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CODSER", nullable = false, insertable = false, updatable = false)
 	private Sertipo codser;
 

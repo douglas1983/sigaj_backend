@@ -45,7 +45,7 @@ public class Processo implements Serializable {
   // @Column(name = "ASSESSOR")
   // private Integer assessor;
 
-  @ManyToOne()
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "ASSESSOR")
   private Func assessor;
 
@@ -133,7 +133,7 @@ public class Processo implements Serializable {
   private List<Protocolo> protocolos;
 
   // bi-directional many-to-one association to Func
-  @ManyToOne()
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "ENTFUNC")
   private Func funcionario;
 

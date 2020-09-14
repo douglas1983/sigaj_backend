@@ -61,7 +61,7 @@ public class Protocolo implements Serializable {
   // private Integer codser;
 
   // bi-directional many-to-one association to Desconto
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JsonIgnore
   @JoinColumn(name = "CODSER", referencedColumnName = "CODIGO", nullable = false, insertable = false, updatable = false)
   private Sertipo servico;
@@ -112,7 +112,7 @@ public class Protocolo implements Serializable {
 
   // bi-directional many-to-one association to Processo
   @JsonIgnore
-  @ManyToOne()
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "CODPROC", referencedColumnName = "CODIGO")
   private Processo processo;
 
