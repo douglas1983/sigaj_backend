@@ -73,9 +73,9 @@ public class Expedicao implements Serializable {
   @JoinColumn(name = "FUNC")
   private Func funcBean;
 
-  // bi-directional many-to-one association to Protex
-  @OneToMany(mappedBy = "expedicao", fetch = FetchType.LAZY)
-  @JsonIgnore
-  private List<Protex> protexs;
+  // // bi-directional many-to-one association to Protex
+  // @OneToMany(mappedBy = "expedicao", fetch = FetchType.LAZY)
+  // @JsonIgnore
+  // private List<Protex> protexs;
 
 }

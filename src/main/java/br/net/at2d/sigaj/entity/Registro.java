@@ -91,11 +91,13 @@ public class Registro implements Serializable {
 	private Integer transferido;
 
 	// bi-directional one-to-one association to Protocolo
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumns({
-			@JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable = false, insertable = false, updatable = false),
-			@JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable = false, insertable = false, updatable = false) })
-	private Protocolo protocoloRegistro;
+	// @JsonIgnore
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// @JoinColumns({
+	// @JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable =
+	// false, insertable = false, updatable = false),
+	// @JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable =
+	// false, insertable = false, updatable = false) })
+	// private Protocolo protocoloRegistro;
 
 }

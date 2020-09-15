@@ -53,11 +53,13 @@ public class Exprot implements Serializable {
 	// private Restipo restipo;
 
 	// bi-directional many-to-one association to Protocolo
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonIgnore
-	@JoinColumns({
-			@JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable = false, insertable = false, updatable = false),
-			@JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable = false, insertable = false, updatable = false) })
-	private Protocolo protocoloBean;
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// @JsonIgnore
+	// @JoinColumns({
+	// @JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable =
+	// false, insertable = false, updatable = false),
+	// @JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable =
+	// false, insertable = false, updatable = false) })
+	// private Protocolo protocoloBean;
 
 }

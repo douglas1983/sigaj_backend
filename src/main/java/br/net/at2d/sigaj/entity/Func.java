@@ -86,13 +86,13 @@ public class Func implements Serializable {
 	@Column(name = "TRABASS")
 	private Integer trabass;
 
-	// bi-directional many-to-one association to Expedicao
-	@OneToMany(mappedBy = "funcBean", fetch = FetchType.LAZY)
-	@JsonIgnore
-	private List<Expedicao> expedicaos;
+	// // bi-directional many-to-one association to Expedicao
+	// @OneToMany(mappedBy = "funcBean", fetch = FetchType.LAZY)
+	// @JsonIgnore
+	// private List<Expedicao> expedicaos;
 
-	@OneToMany(mappedBy = "funcionario")
-	@JsonIgnore
-	private List<Processo> processos;
+	// @OneToMany(mappedBy = "funcionario")
+	// @JsonIgnore
+	// private List<Processo> processos;
 
 }

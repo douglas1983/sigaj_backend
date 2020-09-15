@@ -12,7 +12,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -33,6 +36,11 @@ import lombok.NoArgsConstructor;
 @EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(of = "seq")
 @Table(name = "PROTOCOLO")
+@NamedEntityGraph(name = "Protocolo.all", attributeNodes = { @NamedAttributeNode("servico"),
+    @NamedAttributeNode("resprots"), @NamedAttributeNode("processo"), @NamedAttributeNode("exprots"),
+    @NamedAttributeNode("registros"), @NamedAttributeNode("retirada"), @NamedAttributeNode("cnpj") })
+
+@NamedEntityGraph(name = "Protocolo.resprot", attributeNodes = { @NamedAttributeNode("resprots") })
 public class Protocolo implements Serializable {
   // default serial version id, required for serializable classes.
   private static final long serialVersionUID = 1L;
@@ -118,27 +126,43 @@ public class Protocolo implements Serializable {
 
   // bi-directional one-to-one association to Resprot
   @JsonIgnore
-  @OneToMany(mappedBy = "protocoloResult", fetch = FetchType.LAZY)
+  @OneToMany(fetch = FetchType.LAZY)
+  // mappedBy = "protocoloResult",
+  @JoinColumns({
+      @JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable = false, insertable = false, updatable = false),
+      @JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable = false, insertable = false, updatable = false) })
   private Set<Resprot> resprots;
 
   // bi-directional many-to-one association to Exprot
   @JsonIgnore
-  @OneToMany(mappedBy = "protocoloBean", fetch = FetchType.LAZY)
+  @OneToMany(fetch = FetchType.LAZY) // mappedBy = "protocoloBean",
+  @JoinColumns({
+      @JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable = false, insertable = false, updatable = false),
+      @JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable = false, insertable = false, updatable = false) })
   private Set<Exprot> exprots;
 
   // bi-directional many-to-one association to Registro
   @JsonIgnore
-  @OneToMany(mappedBy = "protocoloRegistro", fetch = FetchType.LAZY)
+  @OneToMany(fetch = FetchType.LAZY) // mappedBy = "protocoloRegistro",
+  @JoinColumns({
+      @JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable = false, insertable = false, updatable = false),
+      @JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable = false, insertable = false, updatable = false) })
   private Set<Registro> registros;
 
   // bi-directional many-to-one association to PROTEX
   @JsonIgnore
-  @OneToMany(mappedBy = "protocoloEx", fetch = FetchType.LAZY)
+  @OneToMany(fetch = FetchType.LAZY) // mappedBy = "protocoloEx",
+  @JoinColumns({
+      @JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable = false, insertable = false, updatable = false),
+      @JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable = false, insertable = false, updatable = false) })
   private Set<Protex> retirada;
 
   // bi-directional many-to-one association to Cnpj
   @JsonIgnore
-  @OneToMany(mappedBy = "protocoloCnpj", fetch = FetchType.LAZY)
+  @OneToMany(fetch = FetchType.LAZY) // mappedBy = "protocoloCnpj",
+  @JoinColumns({
+      @JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable = false, insertable = false, updatable = false),
+      @JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable = false, insertable = false, updatable = false) })
   private Set<Cnpj> cnpj;
 
 }

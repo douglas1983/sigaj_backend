@@ -53,11 +53,13 @@ public class Cnpj implements Serializable {
 	@Column(name = "PROTSEQ")
 	private Integer protseq;
 
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumns({
-			@JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable = false, insertable = false, updatable = false),
-			@JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable = false, insertable = false, updatable = false) })
-	private Protocolo protocoloCnpj;
+	// @JsonIgnore
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// @JoinColumns({
+	// @JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable =
+	// false, insertable = false, updatable = false),
+	// @JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable =
+	// false, insertable = false, updatable = false) })
+	// private Protocolo protocoloCnpj;
 
 }

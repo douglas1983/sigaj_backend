@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.net.at2d.sigaj.entity.Protocolo;
 
@@ -25,12 +26,14 @@ public class ProtocoloService {
   @Autowired
   ProtocoloMapper mapper;
 
+  @Transactional(readOnly = true)
   public Page<Protocolo> findAll(Predicate predicate, Pageable pageable) {
     return repository.findAll(predicate, pageable);
   }
 
+  @Transactional(readOnly = true)
   public Set<ProtocoloDTO> findByNumero(String numero) {
-    Set<ProtocoloDTO> protocolos = mapper.map(repository.findByNumeroAndFetchRolesEagerly(numero));
+    Set<ProtocoloDTO> protocolos = mapper.map(repository.findByNumero(numero));
     return protocolos;
   }
 

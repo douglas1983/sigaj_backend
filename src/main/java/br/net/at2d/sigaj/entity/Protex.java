@@ -29,12 +29,14 @@ public class Protex implements Serializable {
 	@EmbeddedId
 	private ProtexPK id;
 
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumns({
-			@JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable = false, insertable = false, updatable = false),
-			@JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable = false, insertable = false, updatable = false) })
-	private Protocolo protocoloEx;
+	// @JsonIgnore
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// @JoinColumns({
+	// @JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable =
+	// false, insertable = false, updatable = false),
+	// @JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable =
+	// false, insertable = false, updatable = false) })
+	// private Protocolo protocoloEx;
 
 	// bi-directional many-to-one association to Expedicao
 	@ManyToOne(fetch = FetchType.LAZY)

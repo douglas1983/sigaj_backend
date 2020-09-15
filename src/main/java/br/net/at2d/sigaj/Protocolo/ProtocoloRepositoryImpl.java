@@ -27,18 +27,20 @@ public class ProtocoloRepositoryImpl implements ProtocoloRepositoryCustom {
   @Override
   public Page<Protocolo> getCustom(Predicate predicate, Pageable page) {
 
-    JPAQuery query = new JPAQuery(em);
+    // JPAQuery query = new JPAQuery(em);
 
-    QProtocolo protocolo = QProtocolo.protocolo;
-    QResprot resprot = QResprot.resprot;
-    QSertipo servico = QSertipo.sertipo;
-    QProcesso processo = QProcesso.processo;
-    List<Protocolo> prot = ((AbstractJPAQuery) query.select(protocolo, processo, resprot).from(protocolo)
-        .leftJoin(protocolo.processo, processo).leftJoin(protocolo.resprots, resprot)
-        .leftJoin(protocolo.servico, servico).limit(1)).fetch();
+    // QProtocolo protocolo = QProtocolo.protocolo;
+    // QResprot resprot = QResprot.resprot;
+    // QSertipo servico = QSertipo.sertipo;
+    // QProcesso processo = QProcesso.processo;
+    // List<Protocolo> prot = ((AbstractJPAQuery) query.select(protocolo, processo,
+    // resprot).from(protocolo)
+    // .leftJoin(protocolo.processo, processo).leftJoin(protocolo.resprots, resprot)
+    // .leftJoin(protocolo.servico, servico).limit(1)).fetch();
 
-    Page<Protocolo> pages = new PageImpl<Protocolo>(prot, page, prot.size());
-    return pages;
+    // Page<Protocolo> pages = new PageImpl<Protocolo>(prot, page, prot.size());
+    // return pages;
+    return null;
 
   }
 

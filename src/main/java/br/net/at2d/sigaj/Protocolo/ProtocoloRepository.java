@@ -2,9 +2,13 @@ package br.net.at2d.sigaj.Protocolo;
 
 import java.util.List;
 
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.core.types.dsl.StringPath;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -20,8 +24,10 @@ import br.net.at2d.sigaj.entity.QProtocolo;
 @Repository
 public interface ProtocoloRepository extends JpaRepository<Protocolo, Integer>, QuerydslPredicateExecutor<Protocolo>,
     QuerydslBinderCustomizer<QProtocolo>, ProtocoloRepositoryCustom {
-  @Query(value = "Select p From Protocolo p where p.numero = :numero")
-  public List<Protocolo> findByNumeroAndFetchRolesEagerly(@Param("numero") String numero);
+
+  @EntityGraph(value = "Protocolo.all")
+  @Query(value = "From Protocolo p where p.numero = :numero")
+  public List<Protocolo> findByNumero(@Param("numero") String numero);
 
   @SuppressWarnings("NullableProblems")
   @Override

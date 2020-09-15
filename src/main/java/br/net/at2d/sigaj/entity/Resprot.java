@@ -55,11 +55,18 @@ public class Resprot implements Serializable {
   @Column(name = "RESULTADO")
   private Integer resultado;
 
-  @JsonIgnore
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumns({
-      @JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable = false, insertable = false, updatable = false),
-      @JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable = false, insertable = false, updatable = false) })
-  private Protocolo protocoloResult;
+  @Column(name = "PROTSEQ")
+  private Integer protseq;
+
+  @Column(name = "PROTOCOLO")
+  private String protocolo;
+  // @JsonIgnore
+  // @ManyToOne(fetch = FetchType.LAZY)
+  // @JoinColumns({
+  // @JoinColumn(name = "PROTOCOLO", referencedColumnName = "NUMERO", nullable =
+  // false, insertable = false, updatable = false),
+  // @JoinColumn(name = "PROTSEQ", referencedColumnName = "SEQPROT", nullable =
+  // false, insertable = false, updatable = false) })
+  // private Protocolo protocoloResult;
 
 }
