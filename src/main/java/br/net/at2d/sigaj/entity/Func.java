@@ -91,7 +91,7 @@ public class Func implements Serializable {
 	@JsonIgnore
 	private List<Expedicao> expedicaos;
 
-	@OneToMany(mappedBy = "funcionario", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "funcionario")
 	@JsonIgnore
 	private List<Processo> processos;
 
