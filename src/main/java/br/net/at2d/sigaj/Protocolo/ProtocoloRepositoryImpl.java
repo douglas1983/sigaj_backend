@@ -5,13 +5,17 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.AbstractJPAQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import br.net.at2d.sigaj.entity.Protocolo;
 import br.net.at2d.sigaj.entity.QProtocolo;
@@ -25,22 +29,32 @@ public class ProtocoloRepositoryImpl implements ProtocoloRepositoryCustom {
   private EntityManager em;
 
   @Override
-  public Page<Protocolo> getCustom(Predicate predicate, Pageable page) {
+  public Page<Protocolo> getCustom(String codcli, Pageable page) {
 
-    // JPAQuery query = new JPAQuery(em);
+    JPAQuery query = new JPAQuery(em);
 
-    // QProtocolo protocolo = QProtocolo.protocolo;
-    // QResprot resprot = QResprot.resprot;
-    // QSertipo servico = QSertipo.sertipo;
-    // QProcesso processo = QProcesso.processo;
-    // List<Protocolo> prot = ((AbstractJPAQuery) query.select(protocolo, processo,
-    // resprot).from(protocolo)
-    // .leftJoin(protocolo.processo, processo).leftJoin(protocolo.resprots, resprot)
-    // .leftJoin(protocolo.servico, servico).limit(1)).fetch();
+    QProtocolo protocolo = QProtocolo.protocolo;
+    QResprot resprot = QResprot.resprot;
 
-    // Page<Protocolo> pages = new PageImpl<Protocolo>(prot, page, prot.size());
-    // return pages;
-    return null;
+    QProcesso processo = QProcesso.processo;
+    query.from(protocolo).leftJoin(protocolo.processo, processo).leftJoin(protocolo.resprots, resprot)
+        .where(processo.codcli.eq(codcli));
+
+    if (page != null) {
+      query.offset(page.getOffset());
+      query.limit(page.getPageSize());
+      // for (Sort.Order o : page.getSort()) {
+      // PathBuilder orderByExpression = new PathBuilder(Object.class, "object");
+
+      // query.orderBy(
+      // new OrderSpecifier(o.isAscending() ? Order.ASC : Order.DESC,
+      // orderByExpression.get(o.getProperty())));
+      // }
+    }
+
+    List<Protocolo> prot = ((AbstractJPAQuery) query).fetch();
+    Page<Protocolo> pages = new PageImpl<Protocolo>(prot, page, prot.size());
+    return pages;
 
   }
 

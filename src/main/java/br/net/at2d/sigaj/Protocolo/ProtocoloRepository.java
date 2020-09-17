@@ -29,6 +29,10 @@ public interface ProtocoloRepository extends JpaRepository<Protocolo, Integer>, 
   @Query(value = "From Protocolo p where p.numero = :numero")
   public List<Protocolo> findByNumero(@Param("numero") String numero);
 
+  @EntityGraph(value = "Protocolo.resprot")
+  @Query(value = "From Protocolo p inner join p.processo pr where pr.codcli = :codcli")
+  public Page<Protocolo> findByProcessoCodcli(@Param("codcli") String codcli, Pageable pageable);
+
   @SuppressWarnings("NullableProblems")
   @Override
   default void customize(QuerydslBindings bindings, QProtocolo prot) {

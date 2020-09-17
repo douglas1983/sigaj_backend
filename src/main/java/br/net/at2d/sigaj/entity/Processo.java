@@ -128,9 +128,9 @@ public class Processo implements Serializable {
   private String senha;
 
   // bi-directional many-to-one association to Protocolo
-  @OneToMany(mappedBy = "processo", fetch = FetchType.LAZY)
-  @JsonIgnore
-  private List<Protocolo> protocolos;
+  // @OneToMany(mappedBy = "processo", fetch = FetchType.LAZY)
+  // @JsonIgnore
+  // private List<Protocolo> protocolos;
 
   // bi-directional many-to-one association to Func
   @ManyToOne(fetch = FetchType.LAZY)

@@ -1,11 +1,13 @@
 package br.net.at2d.sigaj.Protocolo;
 
+import java.util.List;
 import java.util.Set;
 
 import com.querydsl.core.types.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +29,12 @@ public class ProtocoloService {
   ProtocoloMapper mapper;
 
   @Transactional(readOnly = true)
-  public Page<Protocolo> findAll(Predicate predicate, Pageable pageable) {
-    return repository.findAll(predicate, pageable);
+  public Page<Protocolo> findAll(String codcli, Pageable pageable) {
+
+    // List<Protocolo> protocolos = repository.findByProtocolosCliente("EC001",
+    // pageable);
+    // return new PageImpl<>(protocolos, pageable, protocolos.size());
+    return repository.findByProcessoCodcli(codcli, pageable);
   }
 
   @Transactional(readOnly = true)
