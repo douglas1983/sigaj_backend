@@ -1,7 +1,5 @@
 package br.net.at2d.sigaj.Desconto;
 
-import java.util.Set;
-
 import com.querydsl.core.types.Predicate;
 
 import org.springdoc.core.converters.models.PageableAsQueryParam;
@@ -12,8 +10,6 @@ import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,8 +33,9 @@ public class DescontoController {
   }
 
   @GetMapping("/{id}")
-  public Desconto findById(@PathVariable Integer id) {
-    return service.findById(id).orElse(null);
+  public Page<Serdes> findById(@PathVariable Integer id,
+      @Parameter(hidden = true) @PageableDefault(size = 10) Pageable pageable) {
+    return service.findById(id, pageable);
   }
 
   // @PutMapping("/{id}")

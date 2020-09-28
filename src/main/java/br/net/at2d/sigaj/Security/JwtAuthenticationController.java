@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.net.at2d.sigaj.Cliente.Cliente;
-import br.net.at2d.sigaj.Cliente.ClienteDTO;
 import br.net.at2d.sigaj.Cliente.ClienteService;
 import br.net.at2d.sigaj.mappers.ClienteMapper;
 

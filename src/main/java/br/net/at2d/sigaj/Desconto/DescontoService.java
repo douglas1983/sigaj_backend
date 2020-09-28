@@ -32,9 +32,9 @@ public class DescontoService {
 
   }
 
-  public Optional<Desconto> findById(Integer id) {
+  public Page<Serdes> findById(Integer id, Pageable pageable) {
 
-    return repository.findById(id);
+    return SerdesRepository.findByDescontoCodigo(id, pageable);
   }
 
   public Optional<Desconto> UpdateById(Integer id, Desconto update) {

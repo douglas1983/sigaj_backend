@@ -1,13 +1,12 @@
 package br.net.at2d.sigaj.Protocolo;
 
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
 
-import com.querydsl.core.types.Predicate;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,12 +28,21 @@ public class ProtocoloService {
   ProtocoloMapper mapper;
 
   @Transactional(readOnly = true)
-  public Page<Protocolo> findAll(String codcli, Pageable pageable) {
+  public Page<Protocolo> findAll(String codcli, String protocolo, String nire, LocalDateTime dataini,
+      LocalDateTime datafim, Pageable pageable) {
 
     // List<Protocolo> protocolos = repository.findByProtocolosCliente("EC001",
     // pageable);
     // return new PageImpl<>(protocolos, pageable, protocolos.size());
-    return repository.findByProcessoCodcli(codcli, pageable);
+
+    if (protocolo != null && protocolo.trim() != "")
+      return repository.findByProtocolo(codcli, protocolo, pageable);
+    else if (nire != null && nire.trim() != "")
+      return repository.findByNire(codcli, nire, pageable);
+    else if ((dataini != null) && (datafim != null))
+      return repository.findByData(codcli, dataini, datafim, pageable);
+    else
+      return repository.findByProcessoCodcli(codcli, pageable);
   }
 
   @Transactional(readOnly = true)

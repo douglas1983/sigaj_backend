@@ -3,8 +3,6 @@ package br.net.at2d.sigaj.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
@@ -25,6 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(of = "codigo")
+@NamedEntityGraph(name = "Desconto.serdes", attributeNodes = @NamedAttributeNode("serdes"), subgraphs = @NamedSubgraph(name = "codser", attributeNodes = @NamedAttributeNode("codser")))
 public class Desconto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -51,6 +50,7 @@ public class Desconto implements Serializable {
 
 	// bi-directional many-to-one association to Serde
 
-	@OneToMany(mappedBy = "desconto", fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumns({ @JoinColumn(name = "CODDES") })
 	private List<Serdes> serdes;
 }

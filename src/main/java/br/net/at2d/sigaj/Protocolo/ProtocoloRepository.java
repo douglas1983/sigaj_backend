@@ -1,8 +1,8 @@
 package br.net.at2d.sigaj.Protocolo;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.core.types.dsl.StringPath;
 
@@ -32,6 +32,20 @@ public interface ProtocoloRepository extends JpaRepository<Protocolo, Integer>, 
   @EntityGraph(value = "Protocolo.resprot")
   @Query(value = "From Protocolo p inner join p.processo pr where pr.codcli = :codcli")
   public Page<Protocolo> findByProcessoCodcli(@Param("codcli") String codcli, Pageable pageable);
+
+  @EntityGraph(value = "Protocolo.resprot")
+  @Query(value = "From Protocolo p inner join p.processo pr where pr.codcli = :codcli and p.numero = :prot")
+  public Page<Protocolo> findByProtocolo(@Param("codcli") String codcli, @Param("prot") String protocolo,
+      Pageable pageable);
+
+  @EntityGraph(value = "Protocolo.resprot")
+  @Query(value = "From Protocolo p inner join p.processo pr where pr.codcli = :codcli and p.protnire = :nire")
+  public Page<Protocolo> findByNire(@Param("codcli") String codcli, @Param("nire") String nire, Pageable pageable);
+
+  @EntityGraph(value = "Protocolo.resprot")
+  @Query(value = "From Protocolo p inner join p.processo pr where pr.codcli = :codcli and ( p.datainsert between :dataini and :datafim)")
+  public Page<Protocolo> findByData(@Param("codcli") String codcli, @Param("dataini") LocalDateTime dataini,
+      @Param("datafim") LocalDateTime datafim, Pageable pageable);
 
   @SuppressWarnings("NullableProblems")
   @Override

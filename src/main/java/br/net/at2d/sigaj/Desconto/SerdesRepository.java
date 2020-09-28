@@ -5,21 +5,28 @@ import java.util.Set;
 import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.core.types.dsl.StringPath;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.querydsl.binding.SingleValueBinding;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import br.net.at2d.sigaj.entity.Desconto;
-import br.net.at2d.sigaj.entity.QDesconto;
 import br.net.at2d.sigaj.entity.QSerdes;
 import br.net.at2d.sigaj.entity.Serdes;
 
 @Repository
 public interface SerdesRepository
     extends JpaRepository<Serdes, Integer>, QuerydslPredicateExecutor<Serdes>, QuerydslBinderCustomizer<QSerdes> {
+
+  @EntityGraph(value = "Serdes.codser")
+  @Query(value = "From Serdes s inner join s.codser cs where s.id.coddes = :codigo")
+  public Page<Serdes> findByDescontoCodigo(@Param("codigo") Integer codigo, Pageable pageable);
 
   @SuppressWarnings("NullableProblems")
   @Override
