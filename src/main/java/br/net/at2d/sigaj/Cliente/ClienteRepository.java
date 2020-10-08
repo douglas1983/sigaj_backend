@@ -39,7 +39,7 @@ public interface ClienteRepository
     // });
   }
 
-  public Cliente findByLoginnet(String nick);
+  public Cliente findByEmail(String nick);
 
   public Cliente findByCnpj(String cnpj);
 }

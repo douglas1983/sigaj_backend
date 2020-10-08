@@ -30,7 +30,7 @@ public class ClienteService implements UserDetailsService {
 
   @Override
   public Cliente loadUserByUsername(String username) throws UsernameNotFoundException {
-    Cliente applicationUser = repository.findByLoginnet(username);
+    Cliente applicationUser = repository.findByEmail(username);
     if (applicationUser == null) {
       throw new UsernameNotFoundException(username);
     }

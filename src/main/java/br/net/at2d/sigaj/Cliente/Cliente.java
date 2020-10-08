@@ -158,7 +158,7 @@ public class Cliente implements UserDetails {
   @Override
   public String getUsername() {
 
-    return this.loginnet;
+    return this.email;
   }
 
   @Override
