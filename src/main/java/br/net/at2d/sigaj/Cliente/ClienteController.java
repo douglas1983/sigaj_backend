@@ -34,8 +34,8 @@ public class ClienteController {
   }
 
   @GetMapping("/{id}")
-  public Cliente findById(@PathVariable Integer id) {
-    return service.findById(id).orElse(null);
+  public ClienteDTO findById(@PathVariable Integer id) {
+    return service.findById(id);
   }
 
   @PutMapping("/{id}")

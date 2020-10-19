@@ -45,9 +45,24 @@ public class ClienteService implements UserDetailsService {
 
   }
 
-  public Optional<Cliente> findById(Integer id) {
+  public Cliente Save(Cliente cliente) {
+    return repository.save(cliente);
+  }
 
-    return repository.findById(id);
+  public ClienteDTO findById(Integer id) {
+
+    return clienteMapper.map(repository.findById(id).orElse(null));
+  }
+
+  public Cliente findByResetCode(String resetcode) {
+    List<Cliente> clientes = repository.findByResetcode(resetcode);
+    if (clientes.size() > 0)
+      return repository.findByResetcode(resetcode).get(0);
+    return null;
+  }
+
+  public Cliente findByEmail(String email) {
+    return repository.findByEmail(email);
   }
 
   public Cliente loadByCnpj(String cnpj) {

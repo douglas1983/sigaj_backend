@@ -15,6 +15,6 @@ public class ErrorResponse implements Serializable {
 
   private Integer codigo;
   private String description;
-  private String error;
+  private String message;
 
 }

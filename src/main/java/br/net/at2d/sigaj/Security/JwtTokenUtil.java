@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
@@ -24,6 +25,11 @@ import br.net.at2d.sigaj.Cliente.Cliente;
 public class JwtTokenUtil implements Serializable {
   private static final long serialVersionUID = -2550185165626007488L;
   public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+
+  public String getUUID() {
+    UUID uuid = UUID.randomUUID();
+    return uuid.toString();
+  }
 
   // retorna o username do token jwt
   public String getUsernameFromToken(String token) {
@@ -89,4 +95,5 @@ public class JwtTokenUtil implements Serializable {
 
     return (String) auth.getPrincipal();
   }
+
 }

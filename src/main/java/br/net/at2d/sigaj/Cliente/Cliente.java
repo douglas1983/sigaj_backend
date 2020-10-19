@@ -120,6 +120,13 @@ public class Cliente implements UserDetails {
   @Column(name = "SENHANET")
   private String senhanet;
 
+  @Column(name = "RESETCODE")
+  private String resetcode;
+
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+  @Column(name = "EXPIRERESETCODE")
+  private LocalDateTime expireResetCode;
+
   @Column(name = "STATUS")
   private String status;
 

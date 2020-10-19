@@ -1,5 +1,7 @@
 package br.net.at2d.sigaj.Cliente;
 
+import java.util.List;
+
 import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.core.types.dsl.StringPath;
 
@@ -39,7 +41,9 @@ public interface ClienteRepository
     // });
   }
 
-  public Cliente findByEmail(String nick);
+  public Cliente findByEmail(String email);
 
   public Cliente findByCnpj(String cnpj);
+
+  public List<Cliente> findByResetcode(String resetcode);
 }

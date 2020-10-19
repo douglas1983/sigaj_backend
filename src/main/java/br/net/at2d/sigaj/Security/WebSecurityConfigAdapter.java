@@ -49,7 +49,8 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
         // .addFilterBefore(corsFilter(), SessionManagementFilter.class) // adds your
         // custom CorsFilter
         .csrf().disable().authorizeRequests()
-        .antMatchers("/h2-console", "/h2-console/**", "/authenticate", "/authenticatecnpj", "/v3/api-docs/**",
+        .antMatchers("/h2-console", "/h2-console/**", "/authenticate", "/authenticatecnpj", "/confirmpassword",
+            "/signup", "/passwordforgot", "/validateresetcode/**", "/validateresetcode", "/v3/api-docs/**",
             "/swagger-ui/**", "/swagger-ui.html", "/webjars/**")
         .permitAll()
         // bloqueando as outras rotas
@@ -63,7 +64,8 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(WebSecurity web) throws Exception {
     web.ignoring()
-        .antMatchers("/h2-console", "/h2-console/**", "/authenticate", "/authenticatecnpj", "/v3/api-docs/**",
+        .antMatchers("/h2-console", "/h2-console/**", "/authenticate", "/authenticatecnpj", "/confirmpassword",
+            "/signup", "/passwordforgot", "/validateresetcode/**", "/validateresetcode", "/v3/api-docs/**",
             "/v3/api-docs/swagger-config", "/swagger-ui/**", "/v3/api-docs.yml", "/configuration/ui",
             "/swagger-resources/**", "/configuration/security", "/swagger-ui.html", "/webjars/**")
         .antMatchers(HttpMethod.OPTIONS);

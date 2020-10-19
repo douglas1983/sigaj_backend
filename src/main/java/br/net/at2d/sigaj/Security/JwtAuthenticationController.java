@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.net.at2d.sigaj.Cliente.Cliente;
 import br.net.at2d.sigaj.Cliente.ClienteService;
 import br.net.at2d.sigaj.mappers.ClienteMapper;
+import br.net.at2d.sigaj.service.SendGridEmailServiceInterface;
 
 @RestController
 @CrossOrigin
@@ -36,6 +37,9 @@ public class JwtAuthenticationController {
 
   @Autowired
   private ClienteService userDetailsService;
+
+  @Autowired
+  SendGridEmailServiceInterface sendGridEmailService;
 
   @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
   public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {

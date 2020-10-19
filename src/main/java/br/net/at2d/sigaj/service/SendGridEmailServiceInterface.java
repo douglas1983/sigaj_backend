@@ -9,6 +9,9 @@ import com.sendgrid.helpers.mail.objects.Personalization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.net.at2d.sigaj.entity.Parametro;
+import br.net.at2d.sigaj.repository.ParametroRepository;
+
 import java.io.IOException;
 
 @Service
@@ -17,29 +20,55 @@ public class SendGridEmailServiceInterface {
   private SendGrid sendGridClient;
 
   @Autowired
+  private ParametroRepository ParamRepository;
+
+  @Autowired
   public SendGridEmailServiceInterface(SendGrid sendGridClient) {
     this.sendGridClient = sendGridClient;
   }
 
-  public void sendHTML(String from, String to, String subject) throws IOException {
-    sendEmail(from, to, subject);
+  public Response sendResetCode(String toM, String resetcode) throws IOException {
+
+    Parametro param = ParamRepository.findAll().get(0);
+
+    Mail mail = new Mail();
+    mail.setFrom(new Email(param.getEmail()));
+    mail.setTemplateId(param.getResetTemplateId());
+
+    Personalization personalization = new Personalization();
+    personalization.addDynamicTemplateData("resetcode", resetcode);
+
+    personalization.addTo(new Email(toM));
+    personalization.setSubject("Resetar senha");
+    mail.addPersonalization(personalization);
+
+    Request request = new Request();
+    try {
+      request.setMethod(Method.POST);
+      request.setEndpoint("mail/send");
+      request.setBody(mail.build());
+      Response response = sendGridClient.api(request);
+
+      return response;
+    } catch (IOException ex) {
+      throw ex;
+    }
 
   }
 
-  private Response sendEmail(String fromM, String toM, String subjectM) throws IOException {
+  public Response sendSignupCode(String toM, String resetcode) throws IOException {
+
+    Parametro param = ParamRepository.findAll().get(0);
+
     Mail mail = new Mail();
-    mail.setFrom(new Email(fromM));
-    mail.setTemplateId("d-13694169e5fc4460a6b3d4e782c17b19");
+    mail.setFrom(new Email(param.getEmail()));
+    mail.setTemplateId(param.getSignupTemplateId());
 
     Personalization personalization = new Personalization();
-    personalization.addDynamicTemplateData("escritorio", "Escritorio Teste");
-    personalization.addDynamicTemplateData("empresa", "Empresa Teste");
-    personalization.addDynamicTemplateData("protocolo", "14.111.111/20-1");
-    personalization.addDynamicTemplateData("resultado", "Indeferido");
-    personalization.addDynamicTemplateData("colorresult", "#ff0000");
+    personalization.addDynamicTemplateData("resetcode", resetcode);
 
     personalization.addTo(new Email(toM));
-    personalization.setSubject(subjectM);
+    personalization.setSubject("Nova senha");
     mail.addPersonalization(personalization);
 
     Request request = new Request();
