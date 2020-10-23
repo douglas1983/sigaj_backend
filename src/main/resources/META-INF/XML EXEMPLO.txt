@@ -1,0 +1,69 @@
+<soapenv:Header/>
+   <soapenv:Body>
+      <ext:SERVICO_ENTRADA>
+         <sib:HEADER>
+            <VERSAO>1.0</VERSAO>
+            <AUTENTICACAO>D8ITXO/FxuioKY3OyEblLX4QTXORBAImKZ29mgBTqwA=</AUTENTICACAO>
+            <USUARIO_SERVICO>SGCBS02P</USUARIO_SERVICO>
+            <OPERACAO>INCLUI_BOLETO</OPERACAO>
+            <SISTEMA_ORIGEM>SIGCB</SISTEMA_ORIGEM>
+            <UNIDADE>0004</UNIDADE>
+            <DATA_HORA>20170503102800</DATA_HORA>
+            </sib:HEADER>
+         <DADOS>
+            <INCLUI_BOLETO>
+               <CODIGO_BENEFICIARIO>0806248</CODIGO_BENEFICIARIO>
+               <TITULO>
+                  <NOSSO_NUMERO>00000000000000000</NOSSO_NUMERO>
+                  <NUMERO_DOCUMENTO>NPC010617</NUMERO_DOCUMENTO>
+                  <DATA_VENCIMENTO>2018-02-01</DATA_VENCIMENTO>
+                  <VALOR>300000.00</VALOR>
+                  <TIPO_ESPECIE>02</TIPO_ESPECIE>
+                  <FLAG_ACEITE>S</FLAG_ACEITE>
+                  <DATA_EMISSAO>2017-05-01</DATA_EMISSAO>
+                  <JUROS_MORA>
+                     <TIPO>VALOR_POR_DIA</TIPO>
+                     <VALOR>0.50</VALOR>
+                     </JUROS_MORA>
+                  <VALOR_ABATIMENTO>0</VALOR_ABATIMENTO>
+                  <POS_VENCIMENTO>
+                     <ACAO>DEVOLVER</ACAO>
+                     <NUMERO_DIAS>120</NUMERO_DIAS>
+                  </POS_VENCIMENTO>
+                  <CODIGO_MOEDA>9</CODIGO_MOEDA>
+                  <PAGADOR>
+                     <CPF>57962014849</CPF>
+                     <NOME>TESTE PAGADOR 003</NOME>
+                     <ENDERECO>
+                        <LOGRADOURO>SAUS QUADRA 03</LOGRADOURO>
+                        <BAIRRO>BRASILIA</BAIRRO>
+                        <CIDADE>BRASILIA</CIDADE>
+                        <UF>DF</UF>
+                        <CEP>70070030</CEP>
+                     </ENDERECO>
+                  </PAGADOR>
+                  <FICHA_COMPENSACAO>
+                     <MENSAGENS>
+                        <MENSAGEM>TESTE DE INCLUSAO WEBSERVICE 1</MENSAGEM>
+                        <MENSAGEM>TESTE DE INCLUSAO WEBSERVICE 2</MENSAGEM>
+                        </MENSAGENS>
+                  </FICHA_COMPENSACAO>
+                  <RECIBO_PAGADOR>
+                     <MENSAGENS>
+                        <MENSAGEM>TESTE DE INCLUSAO WS MSG PAG 1</MENSAGEM>
+                        <MENSAGEM>TESTE DE INCLUSAO WS MSG PAG 2</MENSAGEM>
+				    <MENSAGEM>TESTE DE INCLUSAO WS MSG PAG 3</MENSAGEM>
+				    <MENSAGEM>TESTE DE INCLUSAO WS MSG PAG 4</MENSAGEM>
+                     </MENSAGENS>
+                  </RECIBO_PAGADOR>
+                 <PAGAMENTO>
+                     <QUANTIDADE_PERMITIDA>01</QUANTIDADE_PERMITIDA>
+                     <TIPO>NAO_ACEITA_VALOR_DIVERGENTE</TIPO>
+                     <VALOR_MINIMO>0.00</VALOR_MINIMO>
+                     <VALOR_MAXIMO>0.00</VALOR_MAXIMO>
+                 </PAGAMENTO>
+               </TITULO>
+            </INCLUI_BOLETO>
+           </DADOS>
+      </ext:SERVICO_ENTRADA>
+   </soapenv:Body>
