@@ -3,6 +3,7 @@ package br.net.at2d.sigaj.service;
 import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -47,8 +48,6 @@ public class BoletoCaixaService {
       String retCod = "-1";
       Cliente cliente = clienteRepo.findById(idCliente).orElse(null);
 
-      Inclui_boleto_entrada_Type cobranca = new Inclui_boleto_entrada_Type();
-
       Titulo_entrada_Type titulo = new Titulo_entrada_Type();
       titulo.setCODIGO_MOEDA(Short.valueOf("09"));
       titulo.setDATA_EMISSAO(new Date(System.currentTimeMillis()));
@@ -81,7 +80,11 @@ public class BoletoCaixaService {
       titulo.setMULTA(multa);
 
       titulo.setNOSSO_NUMERO(Long.parseLong(NossoNumero));
-      titulo.setNUMERO_DOCUMENTO(NossoNumero.substring(10));
+      if (NossoNumero.length() > 10)
+        titulo.setNUMERO_DOCUMENTO(NossoNumero.substring(NossoNumero.length() - 10));
+      else
+        titulo.setNUMERO_DOCUMENTO(NossoNumero);
+
       Pagador_Type pagador = new Pagador_Type();
       Endereco_Type enderecopag = new Endereco_Type();
       enderecopag.setCEP(Integer.parseInt(cliente.getEndcep()));
@@ -103,6 +106,7 @@ public class BoletoCaixaService {
         razaosocial = cliente.getNome().length() > 40 ? cliente.getNome().substring(0, 40) : cliente.getNome();
         pagador.setCNPJ(cnpj);
         pagador.setRAZAO_SOCIAL(razaosocial);
+        pagador.setNOME(razaosocial);
       } else {
         cpf = Long.parseLong(cliente.getCnpj());
         nome = cliente.getNome().length() > 40 ? cliente.getNome().substring(0, 40) : cliente.getNome();
@@ -122,9 +126,11 @@ public class BoletoCaixaService {
       pagamento.setVALOR_MINIMO(BigDecimal.ZERO);
 
       titulo.setPAGAMENTO(pagamento);
+
       Pos_vencimento_Type posvenc = new Pos_vencimento_Type();
       posvenc.setACAO(Pos_vencimento_TypeACAO.DEVOLVER);
       posvenc.setNUMERO_DIAS(Short.valueOf("11"));
+
       titulo.setPOS_VENCIMENTO(posvenc);
       Recibo_pagador_Type recpag = new Recibo_pagador_Type();
       recpag.setMENSAGENS(new String[] { "Não Receber após o vencimento" });
@@ -138,7 +144,8 @@ public class BoletoCaixaService {
       Servico_entrada_negocial_Type servicoentrada = new Servico_entrada_negocial_Type();
       HEADER_BARRAMENTO_TYPE header = new HEADER_BARRAMENTO_TYPE();
       header.setVERSAO("1.2");
-      String VVVVVVVVVV = StringUtils.leftPad(valorboleto.toString().replace(",", "").replace(".", ""), 15, "0");
+      String VVVVVVVVVV = StringUtils
+          .leftPad(new DecimalFormat("0.00").format(valorboleto).replace(",", "").replace(".", ""), 15, "0");
       CEFWebService cef = new CEFWebService();
       DateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
       header.setAUTENTICACAO(cef.DO_HASHB64("0820421" + "00000000000000000"
@@ -155,6 +162,8 @@ public class BoletoCaixaService {
       header.setDATA_HORA(format.format(new Date(System.currentTimeMillis())));
       header.setID_PROCESSO("82042");
       Dados_entrada_Type dados = new Dados_entrada_Type();
+
+      Inclui_boleto_entrada_Type cobranca = new Inclui_boleto_entrada_Type();
       cobranca.setCODIGO_BENEFICIARIO((Integer) 820421);// codigo de jundiai
       cobranca.setTITULO(titulo);
 
