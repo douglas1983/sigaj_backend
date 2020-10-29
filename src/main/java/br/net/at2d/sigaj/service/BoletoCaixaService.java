@@ -6,7 +6,6 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
@@ -18,11 +17,9 @@ import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Dados_entr
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Endereco_Type;
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Ficha_compensacao_Type;
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Inclui_boleto_entrada_Type;
-import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Inclui_boleto_saida_Type;
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Juros_mora_Type;
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Juros_mora_TypeTIPO;
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Manutencao_cobranca_bancariaProxy;
-import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Manutencao_cobranca_bancariaSOAPStub;
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Multa_Type;
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Pagador_Type;
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Pagamento_Type;
@@ -68,14 +65,14 @@ public class BoletoCaixaService {
       Juros_mora_Type juros = new Juros_mora_Type();
       juros.setDATA(titulo.getDATA_VENCIMENTO());
       juros.setTIPO(Juros_mora_TypeTIPO.ISENTO);
-      juros.setPERCENTUAL(BigDecimal.ZERO);
+      // juros.setPERCENTUAL(BigDecimal.ZERO);
       juros.setVALOR(BigDecimal.ZERO);
       titulo.setJUROS_MORA(juros);
 
       Multa_Type multa = new Multa_Type();
       multa.setDATA(titulo.getDATA_VENCIMENTO());
-      multa.setPERCENTUAL(BigDecimal.ZERO);
-      multa.setVALOR(BigDecimal.ZERO);
+      // multa.setPERCENTUAL(BigDecimal.ZERO);
+      multa.setVALOR(BigDecimal.valueOf(2.00));
 
       titulo.setMULTA(multa);
 
@@ -106,12 +103,14 @@ public class BoletoCaixaService {
         razaosocial = cliente.getNome().length() > 40 ? cliente.getNome().substring(0, 40) : cliente.getNome();
         pagador.setCNPJ(cnpj);
         pagador.setRAZAO_SOCIAL(razaosocial);
-        pagador.setNOME(razaosocial);
+        // pagador.setCPF(32045189813L);
+        // pagador.setNOME("Douglas MOacyr morato");
+        // pagador.setNOME(razaosocial);
       } else {
         cpf = Long.parseLong(cliente.getCnpj());
         nome = cliente.getNome().length() > 40 ? cliente.getNome().substring(0, 40) : cliente.getNome();
-        pagador.setCPF(cpf);
-        pagador.setNOME(nome);
+        // pagador.setCPF(cpf);
+        // pagador.setNOME(nome);
 
       }
       ;
@@ -119,9 +118,9 @@ public class BoletoCaixaService {
       titulo.setPAGADOR(pagador);
       Pagamento_Type pagamento = new Pagamento_Type();
       pagamento.setTIPO(Pagamento_TypeTIPO.NAO_ACEITA_VALOR_DIVERGENTE);
-      pagamento.setQUANTIDADE_PERMITIDA(Short.valueOf("0"));
-      pagamento.setPERCENTUAL_MAXIMO(BigDecimal.ZERO);
-      pagamento.setPERCENTUAL_MINIMO(BigDecimal.ZERO);
+      pagamento.setQUANTIDADE_PERMITIDA(Short.valueOf("1"));
+      // pagamento.setPERCENTUAL_MAXIMO(BigDecimal.ZERO);
+      // pagamento.setPERCENTUAL_MINIMO(BigDecimal.ZERO);
       pagamento.setVALOR_MAXIMO(BigDecimal.ZERO);
       pagamento.setVALOR_MINIMO(BigDecimal.ZERO);
 
@@ -129,7 +128,7 @@ public class BoletoCaixaService {
 
       Pos_vencimento_Type posvenc = new Pos_vencimento_Type();
       posvenc.setACAO(Pos_vencimento_TypeACAO.DEVOLVER);
-      posvenc.setNUMERO_DIAS(Short.valueOf("11"));
+      posvenc.setNUMERO_DIAS(Short.valueOf("0"));
 
       titulo.setPOS_VENCIMENTO(posvenc);
       Recibo_pagador_Type recpag = new Recibo_pagador_Type();
@@ -148,8 +147,8 @@ public class BoletoCaixaService {
           .leftPad(new DecimalFormat("0.00").format(valorboleto).replace(",", "").replace(".", ""), 15, "0");
       CEFWebService cef = new CEFWebService();
       DateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
-      header.setAUTENTICACAO(cef.DO_HASHB64("0820421" + "00000000000000000"
-          + dateFormat.format(titulo.getDATA_VENCIMENTO()) + VVVVVVVVVV + "54135728000150"));
+      header.setAUTENTICACAO(cef.DO_HASHB64(
+          "0820421" + NossoNumero + dateFormat.format(titulo.getDATA_VENCIMENTO()) + VVVVVVVVVV + "54135728000150"));
       header.setUSUARIO_SERVICO("SGCBS02P");
       header.setOPERACAO("INCLUI_BOLETO");
       header.setINDICE(0);
@@ -157,10 +156,10 @@ public class BoletoCaixaService {
       header.setUNIDADE("0316");
       InetAddress ia = InetAddress.getLocalHost();
 
-      DateFormat format = new SimpleDateFormat("ddMMyyyyHHmmss");
+      DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
       header.setIDENTIFICADOR_ORIGEM(ia.getHostAddress());
       header.setDATA_HORA(format.format(new Date(System.currentTimeMillis())));
-      header.setID_PROCESSO("82042");
+      header.setID_PROCESSO("082042");
       Dados_entrada_Type dados = new Dados_entrada_Type();
 
       Inclui_boleto_entrada_Type cobranca = new Inclui_boleto_entrada_Type();
@@ -180,17 +179,14 @@ public class BoletoCaixaService {
       } else
         retCod = saida.getCOD_RETORNO();
 
-      if (retCod != "0") {
-        return saida.getCOD_RETORNO() + "-- " + saida.getMSG_RETORNO();
+      if (!retCod.equals("0")) {
+        return saida.getCOD_RETORNO() + "-- " + saida.getMSG_RETORNO() + " -- "
+            + saida.getDADOS().getCONTROLE_NEGOCIAL()[0].getMENSAGENS().getRETORNO();
 
       } else {
-        // BoletoCaixa.Proxy.inclui_boleto_saida_Type itemsaida = new
-        // BoletoCaixa.Proxy.inclui_boleto_saida_Type();
-
         String urlCX = saida.getDADOS().getINCLUI_BOLETO().getURL();
-        // urlCX = itemsaida.Item.URL;
-        Long numeroBoletoCx = saida.getDADOS().getINCLUI_BOLETO().getNOSSO_NUMERO();
-        return urlCX + ':' + numeroBoletoCx.toString();
+
+        return urlCX;
       }
     }
 
