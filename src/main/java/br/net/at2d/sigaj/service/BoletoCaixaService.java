@@ -22,6 +22,7 @@ import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Juros_mora
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Manutencao_cobranca_bancariaProxy;
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Multa_Type;
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Pagador_Type;
+import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Pagador_TypePF;
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Pagamento_Type;
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Pagamento_TypeTIPO;
 import br.gov.caixa.sibar.manutencao_cobranca_bancaria.boleto.externo.Pos_vencimento_Type;
@@ -82,7 +83,6 @@ public class BoletoCaixaService {
       else
         titulo.setNUMERO_DOCUMENTO(NossoNumero);
 
-      Pagador_Type pagador = new Pagador_Type();
       Endereco_Type enderecopag = new Endereco_Type();
       enderecopag.setCEP(Integer.parseInt(cliente.getEndcep()));
       enderecopag.setBAIRRO(
@@ -92,30 +92,38 @@ public class BoletoCaixaService {
       enderecopag.setLOGRADOURO(
           cliente.getEndrua().length() > 40 ? cliente.getEndrua().substring(0, 40) : cliente.getEndrua());
       enderecopag.setUF(cliente.getEndestado());
-      pagador.setENDERECO(enderecopag);
+
       long cnpj = 0;
       long cpf = 0;
       String razaosocial = "";
       String nome = "";
 
       if (cliente.getCnpj().length() > 11) {
+        Pagador_Type pagador = new Pagador_Type();
+        pagador.setENDERECO(enderecopag);
         cnpj = Long.parseLong(cliente.getCnpj());
         razaosocial = cliente.getNome().length() > 40 ? cliente.getNome().substring(0, 40) : cliente.getNome();
         pagador.setCNPJ(cnpj);
         pagador.setRAZAO_SOCIAL(razaosocial);
+        titulo.setPAGADOR(pagador);
         // pagador.setCPF(32045189813L);
         // pagador.setNOME("Douglas MOacyr morato");
         // pagador.setNOME(razaosocial);
       } else {
+        Pagador_TypePF pagadorPF = new Pagador_TypePF();
+        pagadorPF.setENDERECO(enderecopag);
         cpf = Long.parseLong(cliente.getCnpj());
         nome = cliente.getNome().length() > 40 ? cliente.getNome().substring(0, 40) : cliente.getNome();
+
+        pagadorPF.setCPF(cpf);
+        pagadorPF.setNOME(nome);
+        titulo.setPAGADOR(pagadorPF);
         // pagador.setCPF(cpf);
         // pagador.setNOME(nome);
 
       }
       ;
 
-      titulo.setPAGADOR(pagador);
       Pagamento_Type pagamento = new Pagamento_Type();
       pagamento.setTIPO(Pagamento_TypeTIPO.NAO_ACEITA_VALOR_DIVERGENTE);
       pagamento.setQUANTIDADE_PERMITIDA(Short.valueOf("1"));
